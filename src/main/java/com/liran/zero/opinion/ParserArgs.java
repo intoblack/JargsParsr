@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParserArgs {
-	private Map<String, Opinion<?>> opinionValueMap = new HashMap<String, Opinion<?>>();
-	private int minArgsNum = Integer.MAX_VALUE;
+	private static Map<String, Opinion<?>> opinionValueMap = new HashMap<String, Opinion<?>>();
+	private static int minArgsNum = Integer.MAX_VALUE;
 
-	public void registOpinion(Opinion<?> opinion) {
+	public static void registOpinion(Opinion<?> opinion) {
 		for (String opinionName : opinion.getOpinions()) {
 			opinionValueMap.put(opinionName, opinion);
 		}
@@ -18,14 +18,14 @@ public class ParserArgs {
 	 * 
 	 * @param num
 	 */
-	public void setMinArgsNum(int num) {
+	public static void setMinArgsNum(int num) {
 		if (num < 0) {
 			throw new IllegalArgumentException("最小参数个数不能小于0");
 		}
-		this.minArgsNum = num;
+		minArgsNum = num;
 	}
 
-	public void parser(String... args) {
+	public static void parser(String... args) {
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].contains("=")) {
 				String argName[] = args[i].split("=");
@@ -39,7 +39,7 @@ public class ParserArgs {
 		}
 	}
 
-	private boolean setOpinionMap(String key, String argValue) {
+	private static boolean setOpinionMap(String key, String argValue) {
 		if (opinionValueMap.containsKey(key)) {
 			Object value = opinionValueMap.get(key).parserValue(argValue);
 			for (String opinionName : opinionValueMap.get(key).getOpinions()) {
@@ -50,7 +50,7 @@ public class ParserArgs {
 		return false;
 	}
 
-	public Opinion<?> getOpinion(String key) {
+	public static Opinion<?> getOpinion(String key) {
 		if (opinionValueMap.containsKey(key)) {
 			return opinionValueMap.get(key);
 		}
