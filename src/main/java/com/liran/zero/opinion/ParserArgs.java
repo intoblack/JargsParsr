@@ -33,6 +33,18 @@ public class ParserArgs {
 
 	public void parser(String... args) {
 		createHelp();
+		for (String arg : args) { // 查看是否有帮助选项
+			if (arg.equals("-h") || arg.equals("--help")) {
+				if (opinionValueMap.containsKey("-h")) {
+					System.out.println(opinionValueMap.get("-h").getValue());
+					System.exit(0);
+				} else {
+					System.out
+							.println(opinionValueMap.get("--help").getValue());
+					System.exit(0);
+				}
+			}
+		}
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].contains("=")) {
 				String argName[] = args[i].split("=");
@@ -42,7 +54,6 @@ public class ParserArgs {
 					i = i + 1;
 				}
 			}
-
 		}
 	}
 
@@ -80,7 +91,8 @@ public class ParserArgs {
 			Set<String> createdHelpName = new HashSet<String>();
 			for (Entry<String, Opinion<?>> opinion : opinionValueMap.entrySet()) {
 				boolean isFirsr = true;
-				if (createdHelpName.containsAll(opinion.getValue().getOpinions())) {
+				if (createdHelpName.containsAll(opinion.getValue()
+						.getOpinions())) {
 					continue;
 				}
 				for (String opinionName : opinion.getValue().getOpinions()) {
