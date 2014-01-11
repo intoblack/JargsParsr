@@ -1,7 +1,11 @@
 package com.liran.zero.opinion;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
+
+import com.liran.zero.opinion.Opinion.Parsers;
 
 /**
  * 
@@ -51,7 +55,13 @@ public class Opinion<T> {
 	}
 
 	private T value; // 取值
-	private Set<String> opinionSet = new HashSet<String>(); // 选择选项
+	private TreeSet<String> opinionSet = new TreeSet<String>(
+			new Comparator<String>() {
+				public int compare(String o1, String o2) {
+					return o1.length() == o2.length() ? 0
+							: o1.length() > o2.length() ? 1 : -1;
+				}
+			}); // 选择选项
 	private String descMsg = "";
 	private Parsers parser = null;
 
@@ -81,8 +91,8 @@ public class Opinion<T> {
 		this(parser, opinions, defaultValue, "");
 	}
 
-	public Set<String> getOpinions() {
-		return new HashSet<String>(opinionSet);
+	public TreeSet<String> getOpinions() {
+		return new TreeSet<String>(opinionSet);
 	}
 
 	public boolean assertExcute(String key) {
