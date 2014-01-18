@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.liran.zero.opinion.Opinion.Parsers;
+
 
 public class ParserArgs {
 	private Map<String, Opinion<?>> opinionValueMap = new HashMap<String, Opinion<?>>();
@@ -108,7 +108,7 @@ public class ParserArgs {
 				helpMsg.append("\t:" + opinion.getValue().getDescription()
 						+ "\n");
 			}
-			this.registOpinion(new Opinion<String>(Parsers.String,
+			this.registOpinion(new Opinion<String>(new Parser(),
 					new String[] { "--help", "-h" }, helpMsg.toString(), ""));
 		}
 	}

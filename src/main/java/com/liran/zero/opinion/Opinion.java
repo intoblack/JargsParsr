@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.liran.zero.opinion.Opinion.Parsers;
+import com.liran.zero.opinion.Parsers.Parser;
+
 
 /**
  * 
@@ -17,42 +18,42 @@ import com.liran.zero.opinion.Opinion.Parsers;
  */
 public class Opinion<T> {
 
-	public static enum Parsers {
-
-		INT {
-			@Override
-			public Object parser(String value) {
-				return Integer.parseInt(value);
-			}
-		},
-		String {
-			@Override
-			public Object parser(String value) {
-				return value;
-			}
-		},
-		Long {
-			@Override
-			public Object parser(String value) {
-				return Long.parser(value);
-			}
-		},
-		Boolean {
-			@Override
-			public Object parser(String value) {
-				return Boolean.parser(value);
-			}
-		},
-		Double {
-			@Override
-			public Object parser(String value) {
-				return Double.parser(value);
-			}
-		};
-
-		public abstract Object parser(String value);
-
-	}
+//	public static enum Parsers {
+//
+//		INT {
+//			@Override
+//			public Object parser(String value) {
+//				return Integer.parseInt(value);
+//			}
+//		},
+//		String {
+//			@Override
+//			public Object parser(String value) {
+//				return value;
+//			}
+//		},
+//		Long {
+//			@Override
+//			public Object parser(String value) {
+//				return Long.parser(value);
+//			}
+//		},
+//		Boolean {
+//			@Override
+//			public Object parser(String value) {
+//				return Boolean.parser(value);
+//			}
+//		},
+//		Double {
+//			@Override
+//			public Object parser(String value) {
+//				return Double.parser(value);
+//			}
+//		};
+//
+//		public abstract Object parser(String value);
+//
+//	}
 
 	private T value; // 取值
 	private TreeSet<String> opinionSet = new TreeSet<String>(
@@ -63,18 +64,18 @@ public class Opinion<T> {
 				}
 			}); // 选择选项
 	private String descMsg = "";
-	private Parsers parser = null;
+	private Parser parser = null;
 
-	public Opinion(Parsers parser, String opinionName, T defaultValue) {
+	public Opinion(Parser parser, String opinionName, T defaultValue) {
 		this(parser, new String[] { opinionName }, defaultValue, "");
 	}
 
-	public Opinion(Parsers parser, String opinionName, T defaultValue,
+	public Opinion(Parser parser, String opinionName, T defaultValue,
 			String descMsg) {
 		this(parser, new String[] { opinionName }, defaultValue, descMsg);
 	}
 
-	public Opinion(Parsers parser, String opinions[], T defaultValue,
+	public Opinion(Parser parser, String opinions[], T defaultValue,
 			String descMsg) {
 		this.parser = parser;
 		if (opinions.length == 0) {
@@ -87,7 +88,7 @@ public class Opinion<T> {
 		this.descMsg = descMsg;
 	}
 
-	public Opinion(Parsers parser, String opinions[], T defaultValue) {
+	public Opinion(Parser parser, String opinions[], T defaultValue) {
 		this(parser, opinions, defaultValue, "");
 	}
 
